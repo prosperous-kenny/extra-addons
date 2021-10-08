@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="product_category_tree" model="ir.ui.view">
+		<field name="name">Product Category Tree View</field>
+		<field name="model">product.category</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="vuup_product_category_form_view" model="ir.ui.view">
+		<field name="name">Product Category Form View</field>
+		<field name="model">product.category</field>
+		<field name="arch" type="xml">
+			<form string="Product Category">
+				<header></header>
+				<sheet>
+					<group name="top">
+					<group name="left">
+						<field name="name"/>
+						<field name="company_id"/>
+					</group>
+					<group>
+						<field name="category_image" widget="image"/>
+					</group>
+				</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<!-- Product Recipe option -->
+	<!-- <record id="product_recipe" model="ir.ui.view">
+		<field name="name">product recipe inherit</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view"/>
+		<field name="arch" type="xml">
+			<field name="categ_id" position="after">
+				<field name="recipe_id" widget="many2many_tags"/>
+			</field>
+		</field>
+	</record> -->
+
+</odoo>

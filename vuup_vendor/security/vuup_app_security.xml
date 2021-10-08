@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="module_vuup_category" model="ir.module.category">
+		<field name="name">VUUP</field>
+	</record>
+
+	<!-- BongoZone Group User -->
+	<record id="vuup_app_group_user" model="res.groups">
+		<field name="name">User</field>
+		<field name="category_id" ref="module_vuup_category"/>
+		<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+	</record>
+    <!-- End -->
+
+	<!-- Bongozone Group Manager-->
+	<record id="vuup_app_group_manager" model="res.groups">
+		<field name="name">Manager</field>
+		<field name="category_id" ref="module_vuup_category"/>
+		<field name="implied_ids" eval="[(4, ref('vuup_app_group_user'))]"/>
+		<field name="users" eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"/>
+	</record>
+	<!-- End-->
+
+	<!-- Record Rules -->
+	<!-- <data noupdate="0">
+		<record id="bongo_zone_rule" model="ir.rule">
+			<field name="name">Bongzone User Access Rules</field>
+			<field name="model_id" ref="model_payment_transaction"/>
+			<field name="domain_force">['|',('company_id','=',user.company_id.id),('company_id','in',company_ids)]</field>
+		</record>
+	</data> -->
+
+</odoo>

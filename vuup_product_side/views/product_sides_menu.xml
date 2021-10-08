@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Product sides action-->
+<act_window id="product_sides_act_window" name="Sides" res_model="product.side" view_mode="tree,form"/>
+<menuitem id="product_sides" name="Sides" parent="vuup_product.vuup_menu_product" action="product_sides_act_window"/>
+</odoo>

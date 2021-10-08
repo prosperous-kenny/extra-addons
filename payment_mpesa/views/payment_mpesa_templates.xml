@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="mpesa_s2s_form">
+        <input type="hidden" name="data_set" t-att-data-action-url="tx_url" data-create-route="/payment/mpesa/s2s/create_json_3ds" data-remove-me=""/>
+        <input type="hidden" name="acquirer_id" t-att-value="id"/>
+        <input type="hidden" name="partner_id" t-att-value="partner_id"/>
+      <input name="vodacom_phone_number" t-att-value="vodacom_phone_number" class="form-control" placeholder="Enter your vodacom mpesa phone number"
+      data-is-required="true"/>
+    </template>
+</odoo>

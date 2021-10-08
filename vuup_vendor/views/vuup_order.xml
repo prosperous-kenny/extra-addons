@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="bongozone_order_form_view" model="ir.ui.view">
+		<field name="name">Vuup Order Form</field>
+		<field name="model">payment.transaction</field>
+		<field name="arch" type="xml">
+			<form string="Order">
+				<header>
+					<button name="receive_order" type="object" string="Order Delivered"/>
+					<button name="prepare_order" type="object" string="Order Prepared"/>
+					<button name="find_driver" type="object" string="Find Driver"/>
+				</header>
+				<sheet>
+						<group name="top_group">
+						<group name="left_group">
+							<field name="reference"/>
+							<field name="create_date"/>
+							<field name="amount"/>
+						</group>
+						<group name="right_group">
+							<field name="company_id"/>
+							<field name="customer_order_status"/>
+							<field name="partner_address"/>
+							<field name="driver_id" widget="many2one" domain="[['is_driver','=',True]]"/>
+							<field name="driver_latitude" default="driver_id.partner_latitude" attrs="{'invisible':[('driver_id','=',False)]}" />
+							<field name="driver_longitude" default="driver_id.partner_longitude" attrs="{'invisible':[('driver_id','=',False)]}"/>
+						</group>
+					</group>
+					<notebook>
+						<page name="vuup_order_lines" string="Product">
+							<field name="order_id">
+								<tree>
+								<field name="order_id"/>
+								<field name="product_id"/>
+								<field name="order_partner_id"/>
+								<field name="product_uom_qty"/>
+								<field name="price_subtotal"/>
+								</tree>
+								<form>
+									<group name="top">
+										<group name="left">
+									<field name="order_id"/>
+									<field name="product_id"/>
+										</group>
+									</group>
+								</form>
+							</field>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="vuup_order_tree_view" model="ir.ui.view">
+		<field name="name">Bongozone Order Tree View</field>
+		<field name="model">payment.transaction</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="reference"/>
+				<field name="amount"/>
+				<field name="create_date"/>
+				<field name="customer_order_status"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vuup App Menu -->
+    <menuitem id="vuup_menu" name="Vuup" web_icon="vuup_vendor,static/description/icon.png"/>
+
+    <!-- Action To Open Vuup App -->
+<!--    <act_window id="action_vuup_app" name="Order" res_model="payment.transaction" view_mode="tree,form"/>-->
+
+<!--    &lt;!&ndash; Menu Item To open Order List &ndash;&gt;-->
+<!--	<menuitem id="menu_vuup_order" name="Order" parent="vuup_menu"/>-->
+<!--	<menuitem id="vuup_order" name="order" parent="menu_vuup_order" action="action_vuup_app"/>-->
+
+
+    <!-- Sales -->
+<!--    <act_window id="act_vuup_sale" name="Vuup Sale" res_model="sale.order" view_mode="tree,form"/>-->
+    <menuitem id="vuup_menu_sale" name="Vuup Sale" parent="vuup_menu"/>
+    <!-- Order -->
+    <act_window id="act_vuup_sale_order" name="Orders" res_model="sale.order" view_mode="tree,form" domain="[('invoice_status','=','to invoice')]"/>
+    <menuitem id="vuup_menu_sale_order" name="Orders" parent="vuup_menu_sale" action="act_vuup_sale_order"/>
+
+    <!-- Sales -->
+    <act_window id="act_vuup_sales" name="Sales" res_model="sale.order" view_mode="tree,form" domain="[('invoice_status','=','invoiced')]"/>
+    <menuitem id="vuup_menu_sale_sales" name="Sales" parent="vuup_menu_sale" action="act_vuup_sales"/>
+</odoo>

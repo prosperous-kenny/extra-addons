@@ -1,0 +1,39 @@
+{
+    "openrpc": "1.2.4",
+    "info": {
+        "title": "Bongozone Api",
+        "version": "1.0.0",
+        "description": "End points to access odoo json-rpc api",
+        "license": {
+            "name": "LPG3",
+            "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
+        },
+        "contact": {
+            "name": "Bongozone",
+            "email": "info@bongozone.co.tz"
+        }
+       },
+
+       "servers": [{
+           "name": "bongozone",
+           "url": "http://35.236.254.219:8069/"
+       }],
+       "methods": [{
+           "name": "auth",
+           "tags": [{
+               "name": "auth"
+           }],
+           "summary": "method for login",
+           "params": [{
+               "name": "login",
+               "required": true,
+               "schema": {
+                       "type":"string"
+               }},{
+                   "name": "password",
+                   "schema": {
+                       "type":"string"
+                   }
+               }]
+                }]
+}

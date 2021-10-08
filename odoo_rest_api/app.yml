@@ -1,0 +1,497 @@
+openapi: 3.0.3
+info:
+  title: Odoo Rest Api
+  description: Odoo api specification
+  version: 1.0.0
+  termsOfService: 'http://35.236.254.219:8069/terms'
+  contact:
+    email: info@bongozone.co.tz
+  license: 
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers: 
+  - url: 'http://localhost:8069'
+
+tags:
+  - name: auth
+    description: api for authenticate users
+  - name: vendor
+    description: api for getting vendors
+  - name: product
+    description: api for vendor products
+  - name: transaction
+    description: accessing sales order
+  - name: users
+    description: accessing users
+  - name: sales
+    description: acessing sales order
+
+paths:
+  /auth:
+    post:
+      tags:
+        - auth
+      summary: authenticate user 
+      operationId: auth
+      description: user provide username and password and then provided with unique session id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginRequestBody'
+
+      responses:
+        200:
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/loginResponse'
+
+        201:
+          description: Access Error
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/loginError'
+
+  /api/res.company:
+    get:
+      tags:
+        - vendor
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/user'
+      summary: get list of all vendors
+      operationId: vendor
+      description: List of all vendors in odoo backend
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/vendorResponse'
+          
+  /api/payment.transaction:
+    get:
+      tags:
+        - transaction
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/query'
+      summary: vendor orders
+      operationId: transaction
+      description: List of vendor orders
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transactionResponse'
+
+  /api/product.product:
+    get:
+      tags:
+        - product
+      summary: get all vendor product
+      operationId: product
+      description: product list
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productInfo'
+
+  /api/res.users:
+    get:
+      tags:
+        - users
+      parameters:
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/query'
+      summary: get all users
+      operationId: users
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userResponse'
+        
+    put:
+      tags:
+        - users
+      summary: update users
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateRequestBody'
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateResponse"
+
+  /api/sale.order:
+    get:
+      tags:
+        - sales
+      summary: get sales order
+      operationId: sales
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/salesResponse'
+
+        
+components:
+  parameters:
+    filter:
+      required: false
+      name: filter
+      in: query
+      schema:
+        type: string
+        example: [["id","=",1]]
+    user:
+      name: sudo
+      required: false
+      in: query
+      schema:
+        type: string
+        description: use this query if you are accessing this end point as public user,meaning you are not login.
+        example: sudo
+    query:
+      required: false
+      name: query
+      in: query
+      schema:
+        type: string
+        example: '{name,id}'
+
+      
+  schemas:
+     loginRequestBody:
+       title: Odoo login reauest
+       description: Login paramaters to send to odoo server
+       type: object
+       properties:
+         params:
+           type: object
+           title: params
+           properties:
+             login:
+               type: string
+               title: login
+             password: 
+               type: string
+               title: password
+
+     loginResponse:
+       title: login response
+       description: responses from login request
+       type: object
+       properties:
+         jsonrpc: 
+           type: string
+           title: jsonrpc
+         id:
+           type: string
+           title: id
+         result:
+           type: object
+           title: result
+           properties:
+             uid:
+               type: integer
+               title: uid
+             is_admin:
+               type: boolean
+               title: is_admin
+             name:
+               type: string
+               title: name
+             partner_display_name:
+               type: string
+               title: partner_display_name
+             company_id:
+               type: integer
+               title: company_id
+             partner_id:
+               type: integer
+               title: partner_id
+             session_id:
+               type: string
+               title: session_id
+             company_currency_id:
+               type: integer
+               title: company_currency_id
+     userResponse:
+       title: Users response
+       description: responses from user query
+       type: object
+       properties:
+         result:
+           type: array
+           items:
+             $ref: '#/components/schemas/userResult'
+
+     userResult:
+       type: object
+       title: user result
+       properties:
+         partner_id:
+           type: integer
+         id: 
+           type: integer
+         is_driver:
+           type: boolean
+         is_online:
+           type: boolean
+         name:
+           type: string
+         street:
+           type: string
+         city:
+           type: string
+         partner_latitude:
+           type: number
+         partner_longintude:
+           type: number
+         image_1920:
+           type: string
+         image_1024:
+           type: string
+         image_512:
+           type: string
+
+         
+
+     loginError:
+       title: Login Error
+       description: error during login
+       type: object
+       properties:
+        jsonrpc:
+          type: string
+          title: jsonrpc
+        id:
+          type: string
+          title: id
+        result:
+          type: string
+          title: result
+     vendorResponse:
+       title: vendor success response
+       type: object
+       properties:
+         result:
+           type: array
+           items:
+              $ref: '#/components/schemas/vendorResult'
+     vendorResult:
+       type: object
+       title: vendor result
+       properties:
+          name:
+            type: string
+            title: name
+          id:
+            type: integer
+            title: id
+          logo:
+            type: string  
+            title: logo
+          logo_web:
+            type: string
+            title: logo_web
+          favicon:
+            type: string
+            title: favicon
+          display_name:
+            type: string
+
+     transactionResponse:
+       title: successful get vendor order
+       type: object
+       properties:
+         result:
+           type: array
+           items:
+             $ref: '#/components/schemas/transactionResult'
+     transactionResult:
+       title: transaction result
+       type: object
+       properties:
+         provider:
+           type: string
+           title: provider
+         amount:
+           type: string
+           title: amount
+         reference:
+           type: string
+           title: reference 
+         partner_id:
+           type: integer
+           title: partner_id
+         partner_phone:
+           type: string
+           title: partner_phone
+         partner_address:
+           type: string
+           title: partner_address
+         order_id:
+           type: array
+           items:
+             $ref: '#/components/schemas/orderLineInfo'
+         id:
+           type: integer
+           title: id
+         display_name:
+           type: string
+           title: display_name
+         create_date:
+           type: string
+           title: create_date
+      
+     orderLineInfo:
+       title: order Line information
+       type: object
+       properties:
+         id:
+           type: integer
+           title: order line id
+         product_id:
+           type: object
+           properties:
+           $ref: '#/components/schemas/productInfo'
+     productInfo:
+       title: product info
+       type: object
+       properties:
+         id:
+           type: integer
+         name:
+           type: string
+         list_price:
+           type: string
+         image_1920:
+           type: string
+         company_id:
+           type: integer
+
+     updateRequestBody:
+       type: object
+       title: Api update requestBody
+       properties:
+         params:
+           type: object
+           properties:
+             filter:
+               type: string
+               example: [["id","=",1]]
+             sudo:
+                type: string
+             data:
+               type: object
+               properties:
+                 field1:
+                   type: string
+                 field2:
+                   type: integer
+                 fieldN:
+                   type: boolean
+                 related_field:
+                   type: array
+                   items:
+                     $ref: '#/components/schemas/relatedField'         
+
+   
+
+     updateResponse: 
+       type: object
+       properties:
+         jsonrpc:
+           type: string
+         id:
+           type: string
+         result: 
+           type: boolean
+     relatedField:
+       type: integer
+       properties:
+         id:
+           type: integer
+
+     salesResponse:
+       type: object
+       properties:
+         result:
+           type: array
+           items:
+             $ref: '#/components/schemas/saleResult'
+
+     saleResult:
+       type: object
+       properties:
+         id:
+           type: integer
+         name:
+           type: string
+         state:
+           type: string
+         date_order:
+           type: string
+         partner_id:
+           type: string
+         company_id:
+           type: integer
+         amount_total:
+           type: string
+         delivery_count:
+           type: integer
+         invoice_status:
+           type: string
+         order_line:
+           type: array
+           items: 
+             $ref: '#/components/schemas/orderLineInfo'
+
+     
+
+         
+        
+             
+
+
+
+         
+
+    
+
+
+
+         
+           
+         
+
+
+
+

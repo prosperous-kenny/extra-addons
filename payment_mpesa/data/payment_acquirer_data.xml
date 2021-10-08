@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+         <record id="payment_acquirer_mpesa" model="payment.acquirer">
+              <field name="name">Vodacom Mpesa</field>
+              <field name="image_128" type="base64" file="payment_mpesa/static/src/image/mpesa_icon.png"/>
+              <field name="provider">mpesa</field>
+              <field name="company_id" ref="base.main_company"/>
+              <field name="registration_view_template_id" ref="mpesa_s2s_form"/>
+              <field name="display_as">Vodacom Mpesa</field>
+              <field name="payment_flow">s2s</field>
+              <field name="pre_msg">Your payment callback starts with base url and must end with /payment/mpesa/callback</field>
+         </record>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+.vendor_detail{
+    .vendor_image{
+        height: 0;
+        text-align: center;
+        
+        image{
+            max-height: 100%;
+        }
+    }
+.vendor_information{
+    position: relative;
+    flex: 0 0 auto;
+    transition: .3s ease;
+}
+}

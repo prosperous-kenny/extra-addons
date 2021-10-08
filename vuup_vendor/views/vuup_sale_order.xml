@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="vuup_sale_order_form_view" model="ir.ui.view">
+        <field name="name">Vuup Sale Order Form</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <form string="Vuup Orders">
+                <header>
+                    <button name="receive_order" type="object" string="Order Received"/>
+                    <button name="prepare_order" type="object" string="Order Preparing"/>
+                    <button name="find_driver" type="object" string="Find Driver"/>
+                </header>
+                <sheet>
+                    <group name="top">
+                        <group name="left">
+                           <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vuup_sale_order_tree_view" model="ir.ui.view">
+        <field name="name">Vuup Sale Order Tree</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+          <tree string="Sales Orders" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'" multi_edit="1">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" string="Order Number" readonly="1"/>
+                    <field name="date_order" string="Order Date"/>
+                    <field name="commitment_date"/>
+                    <field name="expected_date"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="user_id" optional="show"/>
+                    <field name="team_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show" readonly="1"/>
+                    <field name="amount_untaxed" sum="Total Tax Excluded" widget="monetary" optional="hide"/>
+                    <field name="amount_tax" sum="Tax Total" widget="monetary" optional="hide"/>
+                    <field name="amount_total" sum="Total Tax Included" widget="monetary" optional="show"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="invoice_status" optional="show"/>
+                    <field name="state" invisible="1"/>
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                </tree>
+        </field>
+    </record>
+</odoo>

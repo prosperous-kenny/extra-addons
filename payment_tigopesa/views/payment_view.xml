@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="acquirer_form_tigopesa" model="ir.ui.view">
+            <field name="name">Payment Tigo Form</field>
+            <field name="model">payment.acquirer</field>
+            <field name="inherit_id" ref="payment.acquirer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//group[@name="acquirer"]' position='inside'>
+                    <group attrs="{'invisible':[('provider','!=','tigo')]}">
+                        <field name="tigo_login_url" attrs="{'required':[('provider','=','tigo'),('state','!=','disabled')]}"/>
+                        <field name="tigo_bill_url" attrs="{'required':[('provider','=','tigo'),('state','!=','disabled')]}"/>
+                        <field name="tigo_username" attrs="{'required':[('provider','=','tigo'),('state','!=','disabled')]}"/>
+                        <field name="tigo_password" attrs="{'required':[('provider','=','tigo'),('state','!=','disabled')]}"/>
+                        <field name="tigo_ref" attrs="{'required':[('provider','=','tigo'),('state','!=','disabled')]}"/>
+                        <field name="tigo_payment_remarks" attrs="{'required':[('provider','=','tigo'),('state','!=','disabled')]}"/>
+                        <field name="tigo_callback_url" attrs="{'required':[('provider','=','tigo'),('state','!=','disabled')]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="vuup_assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/vuup_sale/static/src/js/vuup_sale.js"></script>
+        </xpath>
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/vuup_sale/static/src/scss/vuup_sale.scss" />
+        </xpath>
+    </template>
+    <template id="vendors" name="Ecommerce Vendors">
+     <t t-call="website.layout">
+      <t t-set="additional-title">Vendors</t>
+      <div id="wrap js_sale">
+        <div class="oe_structure" id="oe_structure_website_sale_products_1"/>
+      <div class="container-fluid pt-3 o_wsale_products_main_row">
+        <div t-if="enable_left_column" id="products_grid_before" class="col-lg-3"/>
+        <div id="products_grid" t-attf-class="col #{'o_wsale_layout_list' if layout_mode == 'list' else ''}">
+         <div class="row ">
+             <div class="col-md-10 offset-md-1">
+                 <div class="row  vs_search_filter">
+                     <div class="col-md-6"></div>
+                     <div class="col-md-4">
+                         <t t-call="vuup_sale.vendor_search"/>
+                     </div>
+                     <div class="col-md-2">
+                         <t t-call="vuup_sale.vendor_filter"/>
+                     </div>
+                 </div>
+                 <div class="row mt-3">
+                     <div class="col-md-12">
+                         <div t-if="bins" class="o_wsale_products_grid_table_wrapper">
+                             <table class="table table-borderless m-0" t-att-data-ppg="ppg" t-att-data-ppr="ppr" id="vendor_table">
+                                      <colgroup t-ignore="true">
+                                          <col t-foreach="ppr" t-as="p"/>
+                                      </colgroup>
+                                      <tbody>
+                                          <tr t-foreach="bins" t-as="tr_vendor">
+                                            <t t-foreach="tr_vendor" t-as="td_vendor">
+                                                <t t-if="td_vendor">
+                                                  <t t-set="vendor" t-value="td_vendor['product']"/>
+                                                  <td t-att-colspan="td_vendor['x'] != 1 and td_vendor['x']"
+                                                        t-att-rowspan="td_vendor['y'] != 1 and td_vendor['y']"
+                                                        t-attf-class="oe_vendor #{td_vendor['class']}">
+                                                     <div t-attf-class="o_wsale_product_grid_wrapper o_wsale_product_grid_wrapper_#{td_vendor['x']}_#{td_vendor['y']}">  
+                                                     <t t-call="vuup_sale.vendor_list">
+                                                        <t t-set="product_image_big" t-value="td_vendor['x'] + td_vendor['y'] &gt; 2"/>
+                                                     </t>
+                                                    </div> 
+                                                  </td>
+                                                </t>
+                                                <t t-else=""/>
+                                            </t>
+                                          </tr>
+                                      </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+      </div>
+    </div>
+    </div>
+     </t>
+    </template>
+
+    <template id="vendor_search" name="Search Vendors">
+        <input type="text" class="form-control" id="vendor_sale_search" placeholder="search" onkeyup="search()"/>
+    </template>
+
+    <template id="vendor_filter" name="Filter Vendor">
+        <t t-set="name_asc_label">Name: A to Z</t>
+        <t t-set="name_desc_label">Name: Z to A</t>
+        <t t-set="vuup_sale_sortable" t-value="[(name_asc_label,'name asc'),(name_desc_label,'name desc')]"/>
+        <t t-set="vuup_sale_current_sortable" t-value="[sort for sort in vuup_sale_sortable if sort[1]==request.params.get('order', '')]"/>
+        <div class="dropdown">
+        <a role="button" class="dropdown-toggle btn btn-secondary" href="#" data-toggle="dropdown">
+            <span class="d-none d-lg-inline">
+                <t t-if='len(vuup_sale_current_sortable)'>
+                    Sorting by: <t t-raw="vuup_sale_current_sortable[0][0]"/>
+                </t> 
+                <t t-else='1'>
+                    Sort by
+                </t>
+                <i class="fa fa-sort-amount-asc d-lg-none"/>
+            </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" role="menu">
+            <t t-foreach="vuup_sale_sortable" t-as="sortby">
+                <a role="menuitem" t-att-href="keep('/myshop',order=sortby[1])" rel="noindex,nofollow"  class="dropdown-item">
+                    <span t-raw="sortby[0]"/>
+                </a>
+            </t>
+        </div>
+        </div>
+    </template>
+    <template id="vendor_list" name="Vendor List">
+        <t t-set="vendor_href" t-value="keep('/shop', vendor=vendor.name, id=vendor.id)"/>
+        <div class="card vendor_detail">
+        <div class="card-body vendor_image">
+            <a t-attf-href="/shop/{{slug(vendor)}}" class="d-block h-100" itemprop="url">
+                <span t-field="vendor.logo" itemprop="image"
+                    t-options="{'widget': 'image'}"
+                    class="d-flex h-100 justify-content-center align-items-center"/>
+            </a>
+        </div>
+        <div class="card-body p-0 text-center vendor_information">
+            <div class="p-2">
+                <h6 class="o_wsale_products_item_title">
+                    <a itemprop="name" t-attf-href="/shop/{{slug(vendor)}}" t-att-content="vendor.name" t-field="vendor.name" />
+                </h6>
+            </div>
+            <div class="o_wsale_product_btn"/>
+        </div>
+    </div>
+    </template>
+    <template id="vendor_name_product" inherit_id="website_sale.products">
+       <xpath expr="//div[hasclass('products_pager')]" position="before">
+       <div class="row">
+           <div class="col-md-12 pt-3">
+               <ol class="breadcrumb">
+                   <li class="breadcrumb-item">
+                       <a t-att-href="keep('/myshop')">Vendors</a>
+                   </li>
+                   <li class="breadcrumb-item" t-if="vendor">
+                       <span t-field="vendor.name"></span>
+                   </li>
+               </ol>
+           </div>
+       </div>
+       </xpath>
+    </template>
+    <!-- <template id="vendor_product_breadcrumb" inherit_id="website_sale.product">
+        <xpath expr="//ol[hasclass('breadcrumb')]/li[hasclass('breadcrumb-item')]/a" position="replace">
+           <a t-att-href="keep('/myshop',category=0)">Products</a>
+        </xpath>
+    </template> -->
+    <!-- <template id="vendor_product" inherit_id="website_sale.products">
+        <xpath expr="//div[@id='wrap']/div[@class='oe_structure']" position="after">
+          <div class="container-fluid">
+            <div class="card" style="background:#d3d3d3;">
+              <h4 t-esc="vendor.name" class="card-title p-3"></h4>
+            </div>
+          </div>
+        </xpath>
+    </template> -->
+</odoo>

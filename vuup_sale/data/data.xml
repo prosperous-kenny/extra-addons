@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <data noupdate='0'>
+    <record id="vuup menu" model="website.menu">
+        <field name="name">myshop</field>
+        <field name="url">/myshop</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">21</field>
+    </record>
+
+   <!-- <function name="write" model="ir.model.data">
+
+         We nee to find the data
+         <function name="search" model="ir.model.data">
+
+          <value eval="[('module','=','website_sale'),('name','=','shop')]"/>
+
+         </function>
+         Temporary set the nonupdate to False
+             <value eval="{'noupdate':False}"/>
+         </function>
+
+         Get our main job done, modify /shop url to /vendor
+         <record id="website_sale.menu_shop" model="website.menu">
+          <field name="url">/myshop</field>
+         </record>
+
+
+         Time to clean our dirty hand, set previous noupdate True to False
+        <function name="write" model="ir.model.data">
+       <function name="search" model="ir.model.data">
+             <value eval="[('module','=','website_sale'),('name','=','shop')]"/>
+       </function>
+       <value eval="{'noupdate': True}" />
+        </function>  -->
+    </data>

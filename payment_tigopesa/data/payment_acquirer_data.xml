@@ -1,0 +1,14 @@
+<odoo>
+    <data noupdate="0">
+         <record id="payment_acquirer_tigo" model="payment.acquirer">
+              <field name="name">Tigo Pesa</field>
+              <field name="image_128" type="base64" file="payment_tigopesa/static/src/image/tigo_icon.png"/>
+              <field name="provider">tigo</field>
+              <field name="company_id" ref="base.main_company"/>
+              <field name="registration_view_template_id" ref="tigo_s2s_form"/>
+              <field name="display_as">Tigo Pesa</field>
+              <field name="payment_flow">s2s</field>
+              <field name="pre_msg">Your payment callback starts with base url and must end with /payment/tigo/callback</field>
+         </record>
+    </data>
+</odoo>

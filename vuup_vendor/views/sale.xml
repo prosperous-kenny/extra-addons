@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="vuup_sale_order_inherited" model="ir.ui.view">
+        <field name="name">Inherited Sale Order Form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='291']" position="before">
+                    <button name="receive_order" type="object" string="Order Received"/>
+                    <button name="prepare_order" type="object" string="Order Preparing"/>
+                   <button name="find_driver" type="object" string="Find Driver"/>
+                 <button name="show_all" type="object" string="SHOW"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="before">
+               <field name="driver_id" domain="[('is_driver','=',True)]"/>
+                <field name="driver_latitude" attrs="{'invisible':[('driver_id','=',False)]}"/>
+                <field name="driver_longitude" attrs="{'invisible':[('driver_id','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="vuup_product_category_security" model="ir.rule">
+			<field name="name">Vuup Product Category Rules</field>
+			<field name="model_id" ref="model_product_category"/>
+			<field name="domain_force">['|','|',('company_id','=',user.company_id.id),('company_id','in',company_ids),('company_id','=',False)]</field>
+		</record>
+	</data>
+	<!-- <data noupdate="0">
+		<record id="vuup_product_security" model="ir.rule">
+			<field name="name">Vuup Product Rules</field>
+			<field name="model_id" ref="model_product_template"/>
+			<field name="domain_force">['|','|',('company_id.child_ids','child_of',user.company_id.id),('company_id','child_of',user.company_id.id),('company_id','=',False)]</field>
+		</record>
+	</data> -->
+</odoo>

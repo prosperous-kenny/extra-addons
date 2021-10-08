@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<record model="ir.cron" id="cron_auto_confirm_purchase_order">
+    <field name="name">Auto Confirm Purchase Order on Dropshiping</field>
+    <field name="model_id" ref="purchase.model_purchase_order"/>
+    <field name="state">code</field>
+    <field name="code">model._automate_order_confirm()</field>
+    <field name="active" eval="True"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="interval_number">1</field> <!-- To decide clearly -->
+    <field name="interval_type">minutes</field>
+    <field name="numbercall">-1</field>
+</record>
+    </odoo>

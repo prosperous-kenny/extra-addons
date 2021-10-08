@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_create,perm_write,perm_unlink
+access_vuup_app_user,Vuup User,payment.model_payment_transaction,vuup_app_group_user,1,0,0,0
+access_vuup_app_manager, Vuup Manager,payment.model_payment_transaction,vuup_app_group_manager,1,1,1,1
+
+access_vuup_order_driver_admin,Vuup Order Driver Manager,model_order_driver,vuup_app_group_manager,1,1,1,1

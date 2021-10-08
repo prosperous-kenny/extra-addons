@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="vendor_product_form" model="ir.ui.view">
+      <field name="name">Vendor Product Form View</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <div name="button_box" position="attributes">
+            <attribute name="attrs">{'invisible':[('uid','!=',2)]}</attribute>
+        </div>
+         <page name="sales" position="attributes">
+           <attribute name="invisible">1</attribute>
+         </page>
+         <page name="invoicing" position="attributes">
+           <attribute name="invisible">1</attribute>
+         </page>
+         <page name="purchase" position="attributes">
+          <attribute name="attrs">{'invisible':[('uid','!=',2)]}</attribute>
+         </page>
+         <page name="inventory" position="attributes">
+          <attribute name="attrs">{'invisible':[('uid','!=',2)]}</attribute>
+         </page>
+         <!-- <xpath expr="//page[@name='general_information']//field[@name='default_code']" position="attributes">
+          <attribute name="invisible">1</attribute>
+         </xpath>
+         <xpath expr="//page[@name='general_information']//field[@name='barcode']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//page[@name='general_information']//field[@name='tic_category_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//page[@name='general_information']//field[@name='company_id']" position="attributes">
+          <attribute name="required">1</attribute>
+        </xpath> -->
+      </field>
+    </record>
+</odoo>
